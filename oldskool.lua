@@ -32,21 +32,26 @@ Scroller = Class:extend({
 		background = 11,
 		foreground = 7,
 		x = 240,
-		y = 60
+		y = 60,
+		delta = 1
 })
 function Scroller:run()
 	cls(self.background)
-	local width = print(self.text, self.x, self.y)
-	self.x = self.x - 1
+	local width = print(self.text, self.x, self.y, self.foreground)
+	self.x = self.x - self.delta
 	if self.x < -width then
-		return true
+		if self.next then
+			return self.next
+		else
+			return true
+		end
 	end
 end
 
 
 function BOOT()
-	trace(Scroller.new)
-	local first = Scroller:new({text = "Some nice scroller text..."})
+	local second = Scroller:new({text = "And now a little lower...", foreground = 8, y = 76})
+	local first = Scroller:new({text = "Some nice scroller text...", delta = 1.41, next = second})
 	EFFECTLIST = {first}
 end
 
@@ -57,7 +62,7 @@ function TIC()
 		local ret=eff:run()
 		if ret then
 			if ret ~= true then
-				table.insert(new,ret)
+				table.insert(new, ret)
 			end
 		else
 			table.insert(new,eff)
