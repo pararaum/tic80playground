@@ -35,22 +35,25 @@ Scroller = Class:extend({
 		y = 60,
 		delta = 1
 })
+function Scroller:finish()
+	if self.next then
+		return self.next
+	else
+		return true
+	end
+end
 function Scroller:run()
 	cls(self.background)
 	local width = print(self.text, self.x, self.y, self.foreground)
 	self.x = self.x - self.delta
 	if self.x < -width then
-		if self.next then
-			return self.next
-		else
-			return true
-		end
+		return self:finish()
 	end
 end
 
 
 function BOOT()
-	local second = Scroller:new({text = "And now a little lower...", foreground = 8, y = 76})
+	local second = Scroller:new({text = "And now a little (s)lower...", foreground = 8, y = 76})
 	local first = Scroller:new({text = "Some nice scroller text...", delta = 1.41, next = second})
 	EFFECTLIST = {first}
 end
