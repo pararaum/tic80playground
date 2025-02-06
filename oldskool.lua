@@ -7,20 +7,48 @@
 
 Class={}
 function Class:extend(classinit)
-	return setmetatable(classinit or {},	{ __index=self})
+	classinit.extends = self
+	return setmetatable(classinit or {}, { __index=self})
 end
 function Class:new(init)
-	
+	trace(init)
+	local obj =  {}
+	for k,v in pairs(init or {}) do
+		obj[k]=v
+	end
+	setmetatable(obj, { __index=self })
+	local curr, lastinit = self
+	while curr do
+		if curr.init and curr.init ~= lastinit then
+			lastinit = curr.init
+			lastinit(obj)
+		end
+		curr = curr.extends
+	end
+	trace(obj)
+	return obj
+end
+
+
+Scroller = Class:extend({
+		background = 11,
+		foreground = 7
+})
+function Scroller:run()
+	cls(self.background)
+	print(self.text, 0, 10)
 end
 
 
 function BOOT()
-	EFFECTLIST={}
+	trace(Scroller.new)
+	local first = Scroller:new({text = "Some nice scroller text..."})
+	EFFECTLIST = {first}
 end
 
 
 function TIC()
-	local	new={}
+	local new={}
 	for _,eff in ipairs(EFFECTLIST) do
 		local ret=eff:run()
 		if ret then
