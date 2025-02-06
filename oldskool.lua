@@ -11,7 +11,6 @@ function Class:extend(classinit)
 	return setmetatable(classinit or {}, { __index=self})
 end
 function Class:new(init)
-	trace(init)
 	local obj =  {}
 	for k,v in pairs(init or {}) do
 		obj[k]=v
@@ -25,18 +24,23 @@ function Class:new(init)
 		end
 		curr = curr.extends
 	end
-	trace(obj)
 	return obj
 end
 
 
 Scroller = Class:extend({
 		background = 11,
-		foreground = 7
+		foreground = 7,
+		x = 240,
+		y = 60
 })
 function Scroller:run()
 	cls(self.background)
-	print(self.text, 0, 10)
+	local width = print(self.text, self.x, self.y)
+	self.x = self.x - 1
+	if self.x < -width then
+		return true
+	end
 end
 
 
@@ -52,7 +56,9 @@ function TIC()
 	for _,eff in ipairs(EFFECTLIST) do
 		local ret=eff:run()
 		if ret then
-			table.insert(new,ret)
+			if ret ~= true then
+				table.insert(new,ret)
+			end
 		else
 			table.insert(new,eff)
 		end
