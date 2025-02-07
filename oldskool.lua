@@ -52,6 +52,15 @@ function Scroller:run()
 end
 
 
+DelayFrames = Class:extend({ delay = 60 }) -- Default delay is 1s.
+function DelayFrames:run()
+	self.delay = self.delay - 1
+	if self.delay < 0 then
+		return true
+	end
+end
+
+
 function next_effect()
 	trace(string.format("#EFFECTS = %d, #EFFECTLIST = %d", #EFFECTS, #EFFECTLIST))
 	return table.remove(EFFECTLIST, 1)
@@ -61,7 +70,7 @@ end
 function BOOT()
 	local second = Scroller:new({text = "And now a little (s)lower...", foreground = 8, y = 76})
 	local first = Scroller:new({text = "Some nice scroller text...", delta = 1.41})
-	EFFECTLIST = {first, second}
+	EFFECTLIST = {first, DelayFrames:new({delay = 30}), second}
 	EFFECTS = {}
 	table.insert(EFFECTS, next_effect())
 end
