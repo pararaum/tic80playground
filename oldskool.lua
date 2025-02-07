@@ -52,26 +52,36 @@ function Scroller:run()
 end
 
 
+function next_effect()
+	trace(string.format("#EFFECTS = %d, #EFFECTLIST = %d", #EFFECTS, #EFFECTLIST))
+	return table.remove(EFFECTLIST, 1)
+end
+
+
 function BOOT()
 	local second = Scroller:new({text = "And now a little (s)lower...", foreground = 8, y = 76})
-	local first = Scroller:new({text = "Some nice scroller text...", delta = 1.41, next = second})
-	EFFECTLIST = {first}
+	local first = Scroller:new({text = "Some nice scroller text...", delta = 1.41})
+	EFFECTLIST = {first, second}
+	EFFECTS = {}
+	table.insert(EFFECTS, next_effect())
 end
 
 
 function TIC()
 	local new={}
-	for _,eff in ipairs(EFFECTLIST) do
+	for _,eff in ipairs(EFFECTS) do
 		local ret=eff:run()
 		if ret then
 			if ret ~= true then
 				table.insert(new, ret)
+			else
+				table.insert(new, next_effect())
 			end
 		else
-			table.insert(new,eff)
+			table.insert(new, eff)
 		end
 	end
-	EFFECTLIST=new
+	EFFECTS=new
 end
 
 
