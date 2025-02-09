@@ -61,6 +61,16 @@ function DelayFrames:run()
 end
 
 
+Rasterbar = Class:extend({ y = 80 })
+function Rasterbar:run()
+	cls()
+	for idx, col in ipairs(self.colours) do
+		local y = self.y - 1 + idx
+		line(0, y, 239, y, col
+	end
+end
+
+
 function next_effect()
 	trace(string.format("#EFFECTS = %d, #EFFECTLIST = %d", #EFFECTS, #EFFECTLIST))
 	return table.remove(EFFECTLIST, 1)
