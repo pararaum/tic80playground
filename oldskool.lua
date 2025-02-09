@@ -52,7 +52,7 @@ function Scroller:run()
 end
 
 
-DelayFrames = Class:extend({ delay = 60 }) -- Default delay is 1s.
+DelayFrames = Class:extend({ delay=60 }) -- Default delay is 1s.
 function DelayFrames:run()
 	self.delay = self.delay - 1
 	if self.delay < 0 then
@@ -61,7 +61,7 @@ function DelayFrames:run()
 end
 
 
-Rasterbar = Class:extend({ y = 80, A = 20, phi = 0, omega = .06, frame=4*60 })
+Rasterbar = Class:extend({ y=80, A=20, phi=0, omega=.06, frame=4*60 })
 function Rasterbar:run()
 	cls()
 	for idx, col in ipairs(self.colours) do
@@ -74,12 +74,15 @@ function Rasterbar:run()
 end
 
 
-RasterbarWText = Rasterbar:extend({textx=0, texty=10, textcol = 10})
+RasterbarWText = Rasterbar:extend({textx=0, texty=10, textcol=10})
 function RasterbarWText:run()
 	ret = self.extends.run(self)
 	print(self.text, self.textx, self.texty, self.textcol)
 	return ret
 end
+
+
+ByeBye = Class:extend({})
 
 
 function next_effect()
@@ -96,7 +99,8 @@ function BOOT()
 		DelayFrames:new({delay = 30}),
 		second,
 		DelayFrames:new(),
-		RasterbarWText:new({ colours={2, 3, 4, 12, 4, 3, 2 }, text="Rasterbar", textx=96, texty=30 })
+		RasterbarWText:new({ colours={2, 3, 4, 12, 4, 3, 2 }, text="Rasterbar", textx=96, texty=30 }),
+		ByeBye:new({run=function (self) cls(7) print("Bye Bye!", 100, 64, 5) end})
 	}
 	EFFECTS = {}
 	table.insert(EFFECTS, next_effect())
