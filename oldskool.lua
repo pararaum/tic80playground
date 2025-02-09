@@ -74,7 +74,7 @@ function Rasterbar:run()
 end
 
 
-RasterbarWText = Rasterbar:extend({textx=0, texty=10, textcol=10})
+RasterbarWText = Rasterbar:extend({textx=0, texty=10, textcol=13})
 function RasterbarWText:run()
 	ret = self.extends.run(self)
 	print(self.text, self.textx, self.texty, self.textcol)
