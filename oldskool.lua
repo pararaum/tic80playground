@@ -61,7 +61,7 @@ function DelayFrames:run()
 end
 
 
-Rasterbar = Class:extend({ y = 80, A = 20, phi = 0, omega = .06 })
+Rasterbar = Class:extend({ y = 80, A = 20, phi = 0, omega = .06, frame=4*60 })
 function Rasterbar:run()
 	cls()
 	for idx, col in ipairs(self.colours) do
@@ -69,13 +69,16 @@ function Rasterbar:run()
 		line(0, y, 239, y, col)
 	end
 	self.phi = self.phi + self.omega
+	self.frame = self.frame - 1
+	return self.frame < 0
 end
 
 
 RasterbarWText = Rasterbar:extend({textx=0, texty=10, textcol = 10})
 function RasterbarWText:run()
-	self.extends.run(self)
+	ret = self.extends.run(self)
 	print(self.text, self.textx, self.texty, self.textcol)
+	return ret
 end
 
 
