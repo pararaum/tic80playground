@@ -61,13 +61,14 @@ function DelayFrames:run()
 end
 
 
-Rasterbar = Class:extend({ y = 80 })
+Rasterbar = Class:extend({ y = 80, A = 20, phi = 0, omega = .06 })
 function Rasterbar:run()
 	cls()
 	for idx, col in ipairs(self.colours) do
-		local y = self.y - 1 + idx
-		line(0, y, 239, y, col
+		local y = self.y + idx + self.A * math.sin(self.phi)
+		line(0, y, 239, y, col)
 	end
+	self.phi = self.phi + self.omega
 end
 
 
@@ -80,7 +81,13 @@ end
 function BOOT()
 	local second = Scroller:new({text = "And now a little (s)lower...", foreground = 8, y = 76})
 	local first = Scroller:new({text = "Some nice scroller text...", delta = 1.41})
-	EFFECTLIST = {first, DelayFrames:new({delay = 30}), second}
+	EFFECTLIST = {
+		first,
+		DelayFrames:new({delay = 30}),
+		second,
+		DelayFrames:new(),
+		Rasterbar:new({ colours={2, 3, 4, 12, 4, 3, 2 } })
+	}
 	EFFECTS = {}
 	table.insert(EFFECTS, next_effect())
 end
