@@ -72,6 +72,13 @@ function Rasterbar:run()
 end
 
 
+RasterbarWText = Rasterbar:extend({textx=0, texty=10, textcol = 10})
+function RasterbarWText:run()
+	self.extends.run(self)
+	print(self.text, self.textx, self.texty, self.textcol)
+end
+
+
 function next_effect()
 	trace(string.format("#EFFECTS = %d, #EFFECTLIST = %d", #EFFECTS, #EFFECTLIST))
 	return table.remove(EFFECTLIST, 1)
@@ -86,7 +93,7 @@ function BOOT()
 		DelayFrames:new({delay = 30}),
 		second,
 		DelayFrames:new(),
-		Rasterbar:new({ colours={2, 3, 4, 12, 4, 3, 2 } })
+		RasterbarWText:new({ colours={2, 3, 4, 12, 4, 3, 2 }, text="Rasterbar", textx=96, texty=30 })
 	}
 	EFFECTS = {}
 	table.insert(EFFECTS, next_effect())
