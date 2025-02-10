@@ -253,7 +253,7 @@ function Image:new(init)
 		poke(0x3fc0-2 + 3*i, g)
 		poke(0x3fc0-1 + 3*i, b)
 	end
-	self.old_colors = oldcols
+	ret.old_colors = oldcols
 	return ret
 end
 function Image:run()
