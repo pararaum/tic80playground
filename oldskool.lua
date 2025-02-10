@@ -263,8 +263,8 @@ function Image:run()
 			if pixc >= 10 then
 				pixc = pixc - 16
 			end
-			pix(colidx-1, rowidx-1, pixc)
-			--poke4(((rowidx-1)*240/4)+colidx-1,pixc)
+			--pix(colidx-1, rowidx-1, pixc)
+			poke4(((rowidx-1)*240)+(colidx-1),pixc)
 		end
 	end
 end
