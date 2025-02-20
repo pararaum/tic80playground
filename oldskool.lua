@@ -82,6 +82,32 @@ function RasterbarWText:run()
 end
 
 
+VRasterBar = Class:extend({ x=108, A=100, phi=0, omega=.017, frames=10*60, colours={2,8,9,10,11,12,11,10,9,8,2} })
+function VRasterBar:run()
+	cls()
+	if math.cos(self.phi) < 0 then
+		self:text()
+		self:bar()
+	else
+		self:bar()
+		self:text()
+	end
+	self.phi = self.phi + self.omega
+	self.frames = self.frames - 1
+	return self.frames < 0
+end
+function VRasterBar:text()
+	print("More Rasterbars!", 72, 110, 5)
+end
+function VRasterBar:bar()
+	for idx, col in ipairs(self.colours) do
+		local x = self.x + 2 * idx + self.A * math.sin(self.phi)
+		line(x, 0, x, 136, col)
+		line(x + 1, 0, x + 1, 136, col)
+	end
+end
+
+
 ByeBye = Class:extend({})
 
 
@@ -283,6 +309,7 @@ function BOOT()
 		second,
 		DelayFrames:new(),
 		RasterbarWText:new({ colours={2, 3, 4, 12, 4, 3, 2 }, text="Rasterbar", textx=96, texty=30 }),
+		VRasterBar,
 		image,
 		ByeBye:new({run=function (self) cls(7) print("Bye Bye!", 100, 64, 5) end})
 	}
