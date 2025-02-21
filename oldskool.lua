@@ -108,6 +108,31 @@ function VRasterBar:bar()
 end
 
 
+KefrensBars = Class:extend({ frames=10*60, phi=0, omega=.03, colours={12, 13, 14, 15, 14, 13, 12} })
+function KefrensBars:run()
+	cls(4)
+	for y = 20, 100 do
+		local x = 120 + 40 * math.cos(self.phi + y / 7)
+		self:draw(x, y)
+	end
+	self.phi = self.phi + self.omega
+	self.frames = self.frames - 1
+	return self.frames < 0
+end
+function KefrensBars:draw(x, y)
+	for dx, col in ipairs(self.colours) do
+		line(x + dx, y, x + dx, 136, col)
+	end
+end
+function KefrensBars:new(init)
+	local ret = self.extends.new(self, init)
+	for i = 1, #ret.colours do
+		trace(ret.colours[i])
+	end
+	return ret
+end
+
+
 ByeBye = Class:extend({})
 
 
@@ -310,6 +335,7 @@ function BOOT()
 		DelayFrames:new(),
 		RasterbarWText:new({ colours={2, 3, 4, 12, 4, 3, 2 }, text="Rasterbar", textx=96, texty=30 }),
 		VRasterBar,
+		KefrensBars:new(),
 		image,
 		ByeBye:new({run=function (self) cls(7) print("Bye Bye!", 100, 64, 5) end})
 	}
