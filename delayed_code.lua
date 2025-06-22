@@ -37,6 +37,9 @@ function Class:new(init)
 	end
 	return obj
 end
+function Class:finish()
+	return true
+end
 
 
 Scroller = Class:extend({
@@ -51,8 +54,12 @@ function Scroller:run()
 	local width = print(self.text, self.x, self.y, self.foreground)
 	self.x = self.x - self.delta
 	if self.x < -width then
-		return true
+		return self:finish()
 	end
+end
+function Scroller:finish()
+	self.x = 240
+	return self.extends:finish()
 end
 
 
@@ -74,6 +81,11 @@ function BOOT()
 		partidx=0, -- Initialise with index *before* first part.
 		running={}, -- The currently running effects, starts empty.
 		parts={
+-- 			{
+-- 				code={
+-- 					Scroller:new({delta=3, text="Quick!"})
+-- 				}
+-- 			},
 			{
 				code={
 					(
@@ -92,7 +104,7 @@ function BOOT()
 				}
 			},
 			{
-				duration=500, code={ mkBackground(2)	}
+				duration=500, code={ mkBackground(2) }
 			},
 			{
 				append=true,
@@ -117,6 +129,8 @@ end
 
 
 function next_part()
+	trace("--------------------------------- next part()")
+	trace(time())
 	DEMO.partidx=DEMO.partidx+1
 	if DEMO.partidx>#DEMO.parts then
 		DEMO.partidx=1
@@ -135,6 +149,7 @@ function next_part()
 	else
 		DEMO.finished=curr.duration+time()
 	end
+	for k,v in pairs(DEMO) do trace(tostring(k) .. " -- " .. tostring(v)) end
 end
 
 
