@@ -136,13 +136,15 @@ function next_part()
 		DEMO.partidx=1
 	end
 	local curr=DEMO.parts[DEMO.partidx]
+	local newruns={} -- New table as tables are handled by reference! And append otherwise makes it bigger and bigger!
 	if curr.append then
 		for _,i in ipairs(curr.code) do
-			table.insert(DEMO.running, i)
+			table.insert(newruns, i)
 		end
 	else
-		DEMO.running=curr.code
+		newruns=curr.code
 	end
+	DEMO.running=newruns
 	BDR=curr.bdr
 	if curr.duration==nil then
 		DEMO.finished=nil
@@ -150,6 +152,7 @@ function next_part()
 		DEMO.finished=curr.duration+time()
 	end
 	for k,v in pairs(DEMO) do trace(tostring(k) .. " -- " .. tostring(v)) end
+	trace(string.format("#DEMO.running=%d", #DEMO.running))
 end
 
 
