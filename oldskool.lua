@@ -11,7 +11,7 @@ function Class:extend(classinit)
 	return setmetatable(classinit or {}, { __index=self})
 end
 function Class:new(init)
-	local obj =  {}
+	local obj = {}
 	for k,v in pairs(init or {}) do
 		obj[k]=v
 	end
