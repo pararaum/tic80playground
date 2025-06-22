@@ -137,12 +137,13 @@ function next_part()
 	end
 	local curr=DEMO.parts[DEMO.partidx]
 	local newruns={} -- New table as tables are handled by reference! And append otherwise makes it bigger and bigger!
-	if curr.append then
-		for _,i in ipairs(curr.code) do
+	if curr.append then -- We append, so copy existings effects.
+		for _,i in ipairs(DEMO.running) do
 			table.insert(newruns, i)
 		end
-	else
-		newruns=curr.code
+	end
+	for _,i in ipairs(curr.code) do -- Always copy new effects.
+		table.insert(newruns, i)
 	end
 	DEMO.running=newruns
 	BDR=curr.bdr
