@@ -7,41 +7,113 @@
 -- script:  lua
 
 function BOOT()
-	trace("===========================")
-	at={
-		{start=1000, code=function ()
-		  local col=0
-				local function func()
-		   cls(col)
-					col=col+1
-					if col < 16 then return func end
-				end
-				return func()
-			end
-		}
-	}
-	running={}
+   trace("🧪===========================")
+   at={
+      {start=1000, code=function ()
+										local col=0
+										local function func()
+													cls(col)
+													col=col+1
+													if col < 16 then
+																return func
+													else
+																local function f2()
+																			cls(0)
+																			return f2
+																end
+																return f2
+													end
+										end
+										return func()
+      end
+      },
+      {start=1500, code={
+										x=240,
+										run=function(self)
+													print("hello", self.x, 100, 1)
+													self.x=self.x-1
+													if self.x > -8 then
+																return self
+													end
+										end
+      }
+      }
+   }
+			--[[
+						Every part has the following information:
+
+						- append (optional): if set to true then the current code is appended to the list of running effects
+						- background (optional): function called before any effects
+						- bdr (optional): this function is set as BDR()
+						- code: array of effects that are played simultaneously
+						- duration: duration in milliseconds
+						
+			]]
+   DEMO={
+						finished=0, -- When is the current part finished?
+						partidx=0, -- Initialise with index *before* first part.
+						running={}, -- The currently running effects, starts empty.
+						parts={
+									{
+												duration=2000, code={
+															function() cls() end
+												}
+									},
+									{
+												code={
+															function() cls(2) end
+												}
+									}
+						}
+			}
+			next_part()
 end
 
 
+function next_part()
+			trace("-----------------------------")
+			DEMO.partidx=DEMO.partidx+1
+			if DEMO.partidx>#DEMO.parts then
+						DEMO.partidx=1
+						trace("RESTART!")
+			end
+			trace(DEMO.partidx)
+			local curr=DEMO.parts[DEMO.partidx]
+			trace(curr)
+			if curr.append then
+						for i in ipairs(curr.code) do
+									table.insert(DEMO.running, i)
+						end
+			else
+						DEMO.running=curr.code
+			end
+			BDR=curr.bdr
+			if curr.duration==nil then
+						DEMO.finished=nil
+			else
+						DEMO.finished=curr.duration+time()
+			end
+end
+
 
 function TIC()
- for k,v in ipairs(at) do
- 	if time() >= v.start then
-   trace(v.start)
-  	table.insert(running, v.code)
-   table.remove(at, k)
-  end
- end
- trace(#running)
- local new={}
- for k,v in ipairs(running) do
- 	local ret=v()
-  if ret then
-   table.insert(new,ret)
-  end
- end
- running=new
+			--trace(string.format("%f>=%f", time(), DEMO.finished))
+			if DEMO.finished~=nil then
+						if time()>=DEMO.finished then
+									next_part()
+						end
+			end
+			local ret=false
+   for k,v in ipairs(DEMO.running) do
+						if type(v)=="function" then
+									ret=ret or v()
+						elseif type(v)=="table" then
+									ret=ret or v:run()
+						end
+						if ret==true then
+									next_part()
+						end
+   end
 end
 
 -- <TILES>
