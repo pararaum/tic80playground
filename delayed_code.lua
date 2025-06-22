@@ -82,7 +82,10 @@ function BOOT()
 							return function()
 								cls(col//10)
 								col=col+1
-								if col>=160 then return true end
+								if col>=160 then
+									col=0
+									return true
+								end
 							end
 						end
 					)()
