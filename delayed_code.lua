@@ -6,39 +6,12 @@
 -- version: 0.0
 -- script:  lua
 
+function mkBackground(col)
+			return function() cls(col) end
+end
+
+
 function BOOT()
-   trace("🧪===========================")
-   at={
-      {start=1000, code=function ()
-										local col=0
-										local function func()
-													cls(col)
-													col=col+1
-													if col < 16 then
-																return func
-													else
-																local function f2()
-																			cls(0)
-																			return f2
-																end
-																return f2
-													end
-										end
-										return func()
-      end
-      },
-      {start=1500, code={
-										x=240,
-										run=function(self)
-													print("hello", self.x, 100, 1)
-													self.x=self.x-1
-													if self.x > -8 then
-																return self
-													end
-										end
-      }
-      }
-   }
 			--[[
 						Every part has the following information:
 
@@ -55,15 +28,32 @@ function BOOT()
 						running={}, -- The currently running effects, starts empty.
 						parts={
 									{
-												duration=2000, code={
-															function() cls() end
+												code={
+															(
+																		function()
+																					col=0
+																					return function()
+																								cls(col//10)
+																								col=col+1
+																								if col>=160 then return true end
+																					end
+																		end
+															)()
 												}
 									},
 									{
+												duration=500, code={ mkBackground(2)	}
+									},
+									{
+												append=true,
+												duration=1500,
 												code={
-															function() cls(2) end
+															function()
+																		print("Hello World!", 90, 64, 12)
+															end
 												}
-									}
+									},
+									{code={}} -- End, do nothing anymore.
 						}
 			}
 			next_part()
@@ -71,17 +61,13 @@ end
 
 
 function next_part()
-			trace("-----------------------------")
 			DEMO.partidx=DEMO.partidx+1
 			if DEMO.partidx>#DEMO.parts then
 						DEMO.partidx=1
-						trace("RESTART!")
 			end
-			trace(DEMO.partidx)
 			local curr=DEMO.parts[DEMO.partidx]
-			trace(curr)
 			if curr.append then
-						for i in ipairs(curr.code) do
+						for _,i in ipairs(curr.code) do
 									table.insert(DEMO.running, i)
 						end
 			else
@@ -97,7 +83,6 @@ end
 
 
 function TIC()
-			--trace(string.format("%f>=%f", time(), DEMO.finished))
 			if DEMO.finished~=nil then
 						if time()>=DEMO.finished then
 									next_part()
