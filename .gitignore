@@ -1,2 +1,7 @@
 *~
 .local
+*.tiles.lua
+*.cooked.lua
+*.image.lua
+*.palette.lua
+*.font.lua

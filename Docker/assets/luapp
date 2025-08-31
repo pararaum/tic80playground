@@ -1,0 +1,85 @@
+#! /usr/bin/lua5.4
+-- -*- mode: lua; -*-
+
+PREFIX="--|"
+EXTENDEDPREFIX=PREFIX..'#'
+
+function prep(file)
+   local chunks = { default={n=0} }
+   -- Only include files *once*.
+   local alreadyincluded = {}
+   local currentchunk = chunks.default
+   function process(lines)
+      local extendedfuncs = {
+	 ['^include "(.+)"'] = function(match)
+	    if not alreadyincluded[match] then
+	       alreadyincluded[match] = true
+	       process(io.open(match):lines())
+	    end
+	 end,
+	 ['^multi "(.+)"'] = function(match)
+	    alreadyincluded[match] = true
+	    process(io.open(match):lines())
+	 end,
+	 ['^chunk "(.+)"'] = function(match)
+	    if chunks[match] ~= nil then
+	       currentchunk = chunks[match]
+	    else
+	       chunks[match] = {n=0}
+	       currentchunk = chunks[match]
+	    end
+	 end,
+      }
+      for line in lines do
+	 if string.find(line, "^"..EXTENDEDPREFIX) then
+	    local extended = string.sub(line, #EXTENDEDPREFIX + 1)
+	    local matched = false
+	    for pattern, func in pairs(extendedfuncs) do
+	       match = extended:match(pattern)
+	       if match then
+		  matched = true
+		  func(match)
+	       end
+	    end
+	    if not matched then
+	       error(string.format("Unknown extended action: %s", extended))
+	    end
+	 elseif string.find(line, "^"..PREFIX) then
+	    table.insert(currentchunk, string.sub(line, #PREFIX + 1) .. "\n")
+	 else
+	    local last = 1
+	    for text, expr, index in string.gmatch(line, "(.-)$(%b())()") do 
+	       last = index
+	       if text ~= "" then
+		  table.insert(currentchunk, string.format('io.write %q ', text))
+	       end
+	       table.insert(currentchunk, string.format('io.write%s ', expr))
+	    end
+	    table.insert(currentchunk, string.format('io.write %q \n', string.sub(line, last).."\n"))
+	 end
+      end
+   end
+   process(file:lines())
+   local linearchunks = {n=0}
+   for name, chunk in pairs(chunks) do
+      table.insert(linearchunks, string.format('io.write %q', "--\n-- Chunk: "..name..'\n--\n'))
+      for _, line in ipairs(chunk) do
+	 table.insert(linearchunks, line)
+      end
+   end
+   return load(table.concat(linearchunks))
+end
+
+local argparse = require "argparse"
+local parser = argparse("luapp", "Lua preprocessor. All given files are read and processed, the output is written to standard output.")
+parser:argument("input", "Input files."):args("*")
+local args = parser:parse()
+
+if #args.input > 0 then
+   for _,i in ipairs(args.input) do
+      local infile = io.open(i, "r")
+      prep(infile)()
+   end
+else
+   prep(io.stdin)()
+end
