@@ -4,14 +4,16 @@ This demo was made for the Evoke 2025 Alternative Platform
 competition, it achieved the 4th place. Watch the demo, enjoy and
 relax!
 
-| Credits  |          |
-|----------|----------|
-| Code     | Pararaum |
-| Font     | m4d      |
-| Font     | DamienG  |
-| Graphics | Nerouine |
-| Graphics | Logiker  |
-| Music    | mAZE     |
+| Credits  |                                                                 |
+|----------|-----------------------------------------------------------------|
+| Code     | Pararaum                                                        |
+| Font     | m4d                                                             |
+| Font     | [DamienG](https://damieng.com/typography/zx-origins/beachball/) |
+| Graphics | Nerouine                                                        |
+| Graphics | Logiker                                                         |
+| Music    | mAZE                                                            |
+
+![Screenshot](screenshot.png)
 
 ## Building ##
 
@@ -32,5 +34,6 @@ version which can load Lua code directly).
 
 ## Links ##
 
-  * https://demozoo.org/productions/376676/
-  * https://www.pouet.net/prod.php?which=104896
+  * <https://demozoo.org/productions/376676/>
+  * <https://www.pouet.net/prod.php?which=104896>
+  * [Source](https://github.com/pararaum/tic80playground/tree/main/Evoke.2025 "https://github.com/pararaum/tic80playground/tree/main/Evoke.2025")
