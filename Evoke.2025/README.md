@@ -37,3 +37,4 @@ version which can load Lua code directly).
   * <https://demozoo.org/productions/376676/>
   * <https://www.pouet.net/prod.php?which=104896>
   * [Source](https://github.com/pararaum/tic80playground/tree/main/Evoke.2025 "https://github.com/pararaum/tic80playground/tree/main/Evoke.2025")
+  * [Competition Version](https://files.scene.org/get/parties/2025/evoke25/alternative_platforms/the_7th_division-beach_relaxation.zip)
