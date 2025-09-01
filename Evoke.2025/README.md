@@ -15,6 +15,13 @@ relax!
 
 ![Screenshot](screenshot.png)
 
+## Downloads ##
+
+  * [Tic-80 file](beach_relaxation.cooked.tic)
+  * [Linux Executable](beach_relaxation.cooked.bin.xz)
+  * [Raspberry Pi executable](beach_relaxation.rpi.bin.xz)
+  * [Windows executbale](beach_relaxation.cooked.exe.gz)
+
 ## Building ##
 
 The demo code was separated into multiple files and therefore needs to
@@ -36,5 +43,6 @@ version which can load Lua code directly).
 
   * <https://demozoo.org/productions/376676/>
   * <https://www.pouet.net/prod.php?which=104896>
+  * <https://tic80.com/play?cart=4380>
   * [Source](https://github.com/pararaum/tic80playground/tree/main/Evoke.2025 "https://github.com/pararaum/tic80playground/tree/main/Evoke.2025")
   * [Competition Version](https://files.scene.org/get/parties/2025/evoke25/alternative_platforms/the_7th_division-beach_relaxation.zip)
