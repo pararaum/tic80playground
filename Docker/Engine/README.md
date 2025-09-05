@@ -210,7 +210,7 @@ include files are available.
 When a file "minimum.lua" should be converted into a file loadable by Tic-80 then use
 
 ```bash
-docker run -u 1000:10 --rm -it -v $PWD:/host -w /host vintagecomputingcarinthia/tic80build gpp -U "" "" "(" "," ")" "(" ")" "#" "\\" -M '--|#' "\n" " " " " "\n" "(" ")" minimum.lua > cooked.lua
+docker run -u 1000:10 --rm -v $PWD:/host -w /host vintagecomputingcarinthia/tic80build gpp -U "" "" "(" "," ")" "(" ")" "#" "\\" -M '--|#' "\n" " " " " "\n" "(" ")" minimum.lua > cooked.lua
 #If using Docker on Windows, replace "$PWD" by "%cd%" but leave the forward slashes!
 ```
 
