@@ -20,7 +20,7 @@ relax!
   * [Tic-80 file](beach_relaxation.cooked.tic)
   * [Linux Executable](beach_relaxation.cooked.bin.xz)
   * [Raspberry Pi executable](beach_relaxation.rpi.bin.xz)
-  * [Windows executbale](beach_relaxation.cooked.exe.gz)
+  * [Windows executable](beach_relaxation.cooked.exe.gz)
 
 ## Building ##
 
