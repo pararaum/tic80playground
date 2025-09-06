@@ -1,11 +1,12 @@
 # Demo Engine #
 
 This demo engine was used in the [Beach
-Relaxation](https://demozoo.org/productions/376676/) demo. It provides
-different parts which can be switched when they are finished or after
-a time delay. Each part consists of effects which are shown at the
-same time. The engine presented here is a variant which will be
-improved over time.
+Relaxation](https://demozoo.org/productions/376676/) demo. The demo
+engine provides a system that switches between different parts written
+by the author of the demo. Different parts which can be switched when
+they are finished or after a time delay. Each part consists of effects
+which are shown at the same time. The engine presented here is a
+variant which will be improved over time.
 
 It is separated into different include files, all named "….inc.lua"
 which can be included into your demo, use the preprocessor of your
