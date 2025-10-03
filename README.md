@@ -6,6 +6,8 @@ Playground for the TIC-80 virtual tiny computer.
   * [documentation](https://tic80.com/learn "https://tic80.com/learn")
   * [Wiki](https://github.com/nesbox/TIC-80/wiki "https://github.com/nesbox/TIC-80/wiki"), …
 
+The webpage of this repository can be found at <https://pararaum.github.io/tic80playground/>.
+
 ## Demos ##
 
 ### Beach Relaxation ###
