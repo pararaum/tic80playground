@@ -15,7 +15,7 @@ RUN apk add python3 lua py3-pillow make && \
     mkdir -p /usr/include/t7d/effects
 
 # Copy files.
-COPY assets/* /usr/local/bin
-COPY Engine/*.inc.lua /usr/include/t7d
-COPY Engine/effects/*.lua /usr/include/t7d/effects
-COPY --from=builder /usr/local/bin/* /usr/local/bin
+COPY assets/* /usr/local/bin/
+COPY Engine/*.inc.lua /usr/include/t7d/
+COPY Engine/effects/*.lua /usr/include/t7d/effects/
+COPY --from=builder /usr/local/bin/* /usr/local/bin/
