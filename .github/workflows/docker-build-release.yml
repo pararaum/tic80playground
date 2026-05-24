@@ -27,10 +27,6 @@ jobs:
         run: |
           TAG=${GITHUB_REF#refs/tags/}
           echo "tag=$TAG" >> $GITHUB_OUTPUT
-          # Extract year and month from tag (e.g., r202605 -> 2026-05)
-          YEAR=${TAG:1:4}
-          MONTH=${TAG:5:2}
-          echo "version=$YEAR-$MONTH" >> $GITHUB_OUTPUT
           echo "image_tag=latest" >> $GITHUB_OUTPUT
 
       - name: Build and push Docker image
@@ -41,7 +37,6 @@ jobs:
           push: true
           tags: |
             ${{ secrets.DOCKER_USERNAME }}/tic80playground:${{ steps.meta.outputs.tag }}
-            ${{ secrets.DOCKER_USERNAME }}/tic80playground:${{ steps.meta.outputs.version }}
             ${{ secrets.DOCKER_USERNAME }}/tic80playground:latest
           labels: |
             org.opencontainers.image.title=tic80playground
