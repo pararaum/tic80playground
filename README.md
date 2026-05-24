@@ -1,12 +1,12 @@
 # TIC-80 Playground #
 
-Playground for the TIC-80 virtual tiny computer.
+Playground for the TIC-80 virtual tiny computer. It will contain
+demos, programming tools, etc.
 
-  * [Homepage](https://tic80.com/ "https://tic80.com/")
-  * [documentation](https://tic80.com/learn "https://tic80.com/learn")
-  * [Wiki](https://github.com/nesbox/TIC-80/wiki "https://github.com/nesbox/TIC-80/wiki"), …
-
-The webpage of this repository can be found at <https://pararaum.github.io/tic80playground/>.
+This repository is hosted on
+<https://github.com/pararaum/tic80playground>. The webpage of this
+repository can be found at
+<https://pararaum.github.io/tic80playground/>.
 
 ## Demos ##
 
@@ -17,3 +17,9 @@ The webpage of this repository can be found at <https://pararaum.github.io/tic80
 ## Engine ##
 
 An [Engine for demo creation](Docker/Engine) with parts and effects. Mostly this is a framework.
+
+## Links ##
+
+  * [Homepage](https://tic80.com/ "https://tic80.com/")
+  * [documentation](https://tic80.com/learn "https://tic80.com/learn")
+  * [Wiki](https://github.com/nesbox/TIC-80/wiki "https://github.com/nesbox/TIC-80/wiki"), …
