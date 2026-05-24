@@ -1,0 +1,49 @@
+name: Build and Push Docker Image on Release Tag
+
+on:
+  push:
+    tags:
+      - 'r[0-9][0-9][0-9][0-9][0-9][0-9]'
+
+jobs:
+  build-and-push:
+    runs-on: ubuntu-latest
+    
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+
+      - name: Set up Docker Buildx
+        uses: docker/setup-buildx-action@v3
+
+      - name: Log in to Docker Hub
+        uses: docker/login-action@v3
+        with:
+          username: ${{ secrets.DOCKER_USERNAME }}
+          password: ${{ secrets.DOCKER_PASSWORD }}
+
+      - name: Extract tag information
+        id: meta
+        run: |
+          TAG=${GITHUB_REF#refs/tags/}
+          echo "tag=$TAG" >> $GITHUB_OUTPUT
+          # Extract year and month from tag (e.g., r202605 -> 2026-05)
+          YEAR=${TAG:1:4}
+          MONTH=${TAG:5:2}
+          echo "version=$YEAR-$MONTH" >> $GITHUB_OUTPUT
+          echo "image_tag=latest" >> $GITHUB_OUTPUT
+
+      - name: Build and push Docker image
+        uses: docker/build-push-action@v5
+        with:
+          context: .
+          file: ./Docker/Dockerfile
+          push: true
+          tags: |
+            ${{ secrets.DOCKER_USERNAME }}/tic80playground:${{ steps.meta.outputs.tag }}
+            ${{ secrets.DOCKER_USERNAME }}/tic80playground:${{ steps.meta.outputs.version }}
+            ${{ secrets.DOCKER_USERNAME }}/tic80playground:latest
+          labels: |
+            org.opencontainers.image.title=tic80playground
+            org.opencontainers.image.version=${{ steps.meta.outputs.tag }}
+            org.opencontainers.image.source=${{ github.server_url }}/${{ github.repository }}
