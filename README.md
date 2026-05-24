@@ -20,6 +20,6 @@ An [Engine for demo creation](Docker/Engine) with parts and effects. Mostly this
 
 ## Links ##
 
-  * [Homepage](https://tic80.com/ "https://tic80.com/")
-  * [documentation](https://tic80.com/learn "https://tic80.com/learn")
-  * [Wiki](https://github.com/nesbox/TIC-80/wiki "https://github.com/nesbox/TIC-80/wiki"), …
+  * [Tic80 Homepage](https://tic80.com/ "https://tic80.com/")
+  * [Tic80 documentation](https://tic80.com/learn "https://tic80.com/learn")
+  * [Tic80 Wiki](https://github.com/nesbox/TIC-80/wiki "https://github.com/nesbox/TIC-80/wiki"), …
