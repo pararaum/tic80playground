@@ -36,9 +36,9 @@ jobs:
           file: ./Docker/Dockerfile
           push: true
           tags: |
-            ${{ secrets.DOCKER_USERNAME }}/tic80playground:${{ steps.meta.outputs.tag }}
-            ${{ secrets.DOCKER_USERNAME }}/tic80playground:latest
+            ${{ secrets.DOCKER_USERNAME }}/tic80build:${{ steps.meta.outputs.tag }}
+            ${{ secrets.DOCKER_USERNAME }}/tic80build:latest
           labels: |
-            org.opencontainers.image.title=tic80playground
+            org.opencontainers.image.title=tic80build
             org.opencontainers.image.version=${{ steps.meta.outputs.tag }}
             org.opencontainers.image.source=${{ github.server_url }}/${{ github.repository }}
